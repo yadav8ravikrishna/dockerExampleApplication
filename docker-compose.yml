@@ -1,0 +1,28 @@
+version: '3.8'
+services:
+  mysql:
+    image: mysql:8.0
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: Ravi@1379
+      MYSQL_DATABASE: report_subscriber
+    ports:
+      - 3307:3306
+    networks:
+      - schedular
+
+  spring-boot-app:
+    image: finaltestimage
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/report_subscriber?useSSL=false&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: Ravi@1379
+    ports:
+      - 8081:8080
+    networks:
+      - schedular
+    depends_on:
+      - mysql
+
+networks:
+  schedular:
